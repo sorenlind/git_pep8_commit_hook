@@ -1,5 +1,24 @@
 """ Setup script for PyPI """
 from setuptools import setup, find_packages
+from distutils.core import setup, Command
+
+
+class PyTest(Command):
+    """Setup class for pytest."""
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import subprocess
+        import sys
+        errno = subprocess.call([sys.executable, 'runtests.py'])
+        raise SystemExit(errno)
+
 
 setup(
     name='git_pep8_commit_hook',
@@ -26,7 +45,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'git_pep8_commit_hook=git_pep8_commit_hook:main',
+            'git_pep8_commit_hook = git_pep8_commit_hook.commit_hook:main',
         ],
     },
+    cmdclass={'test': PyTest},
 )

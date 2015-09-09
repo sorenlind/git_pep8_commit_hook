@@ -1,4 +1,2 @@
-recursive-include git_pep8_commit_hook *
-include git_pep8_commit_hook
 include README.md
 include LICENSE
