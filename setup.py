@@ -47,7 +47,6 @@ setup(
         "Environment :: Console",
         "License :: OSI Approved :: Apache License, Version 2.0",
         "Operating System :: OS Independent",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
     ],
     entry_points={
