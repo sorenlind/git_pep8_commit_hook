@@ -63,7 +63,7 @@ Requirements
 This commit hook is written in Python and has the following requirements:
 
 * [pep8](https://github.com/pycqa/pep8) (`sudo pip install pep8`)
-* Python >= 2.7 < 3.0
+* Python >= 2.7
 
 
 Release notes

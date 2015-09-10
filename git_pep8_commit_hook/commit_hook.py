@@ -16,8 +16,12 @@ import os
 import sys
 import subprocess
 import collections
-import ConfigParser
 import argparse
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
+
 
 ExecutionResult = collections.namedtuple(
     "ExecutionResult",
@@ -113,7 +117,7 @@ def check_repo(
 
     # Load any pre-commit-hooks options from a setup.cfg file (if there is one)
     if os.path.exists(config):
-        conf = ConfigParser.SafeConfigParser()
+        conf = configparser.SafeConfigParser()
         conf.read(config)
         if conf.has_option("pep8_pre_commit_hook", "pep8-command"):
             pep8_command = conf.get("pep8_pre_commit_hook", "pep8-command")
@@ -177,7 +181,7 @@ def check_files(
         print("{} violations (max {}) - {}".format(
             violations, max_violations_per_file, status))
         if "FAILED" in status:
-            print(out)
+            print(out.decode('utf-8'))
 
         # Increment parsed files
         i += 1
@@ -213,7 +217,7 @@ def _get_list_of_committed_files():
     output = subprocess.check_output(
         diff_index_cmd.split()
     )
-    for result in output.split("\n"):
+    for result in output.decode('utf-8').split("\n"):
         if result != "":
             result = result.split()
             if result[4] in ["A", "M"]:
