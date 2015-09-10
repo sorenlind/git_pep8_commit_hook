@@ -1,4 +1,5 @@
 """ Setup script for PyPI """
+import re
 from setuptools import setup, find_packages
 from distutils.core import setup, Command
 
@@ -19,10 +20,15 @@ class PyTest(Command):
         errno = subprocess.call([sys.executable, 'runtests.py'])
         raise SystemExit(errno)
 
+VERSION = re.search(
+    r"^VERSION\s*=\s*'(.*)'",
+    open('git_pep8_commit_hook/commit_hook.py').read(),
+    re.M
+    ).group(1)
 
 setup(
     name='git_pep8_commit_hook',
-    version='0.1.0',
+    version=VERSION,
     license='Apache License, Version 2.0',
     description='Git commit hook that checks Python files with pep8.',
     author='Soren Lind Kristiansen',
