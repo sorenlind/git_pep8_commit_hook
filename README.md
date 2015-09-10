@@ -1,6 +1,8 @@
 git\_pep8\_commit\_hook
 =======================
 
+[![Build Status](https://travis-ci.org/sorenlind/git_pep8_commit_hook.svg?branch=master)](https://travis-ci.org/sorenlind/git_pep8_commit_hook)
+
 Git pre-commit hook for checking coding style of Python code. The hook requires pep8. It will check files with the `.py` extension and files that contain `#!` (shebang) and `python` in the first line. Heavily inspired by and partly based on [git-pylint-commit-hook](https://github.com/sebdah/git-pylint-commit-hook) by Sebastian Dahlgren.
 
 Since `pep8` itself, by default, looks for a `setup.cfg` file in the repository root directory, so does this script. The script works without the `setup.cfg` file. The options for the script can either be placed in the `[pep8_pre_commit_hook]` section of the configuration file or be passed as command line parameters. If the same option is specified in both the configuration file and the parameters, the configuration file takes precedence.
