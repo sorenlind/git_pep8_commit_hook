@@ -14,7 +14,7 @@ Installation
 Install via PyPI
 
 ```
-git install git_pep8_commit_hook
+pip install git_pep8_commit_hook
 ```
 
 
