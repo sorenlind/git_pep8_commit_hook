@@ -38,13 +38,19 @@ max-violations-per-file = 5
 
 The `[pep8]` section is used by pep8. The `[pep8_pre_commit_hook]` section is used by the commit hook script. You may specify the following options:
 
-* **command** is for the actual command, for instance if pep8 is not installed globally, but is in a virtualenv inside the project itself.
+* **pep8-command** is for the actual command, for instance if pep8 is not installed globally, but is in a virtualenv inside the project itself.
 
-* **params** lets you pass custom parameters to pep8
+* **pep8-params** lets you pass custom parameters to pep8
 
 * **max-violations-per-file** lets you specify how many violations of the PEP 0008 standard you are willing to accept for any file. If at least one file has more than the specified number of violations, the commit will be blocked. The default value is 0.
 
-Any of these can be bypassed directly in the pre-commit hook itself.  You can also set a different default place to look for the pylintrc file.
+Alternatively you can pass the above directly to the commit hook script as arguments. In addition to the above, you can also pass the following arguments to the script:
+
+* **config** lets you specify an alternative config file for both pep8 itself and the commit hook script.
+
+* **version** displays the current version of the commit hook script.
+
+* **help** displays a help message explaining the arguments.
 
 Running tests
 -------------

@@ -30,31 +30,40 @@ VERSION = "0.1.0"
 def main():
     """ Main function handling configuration files etc """
     parser = argparse.ArgumentParser(
-        description="Git pep8 commit hook")
+        description="Git pre-commit hook for checking "
+        "coding style of Python code. The hook requires pep8. It will check "
+        "files with the '.py' extension and files that contain '#!' (shebang) "
+        "and 'python' in the first line.")
+
+    parser.add_argument(
+        "--pep8-command",
+        default="pep8",
+        help="path to pep8 executable. Default: pep8")
+
+    parser.add_argument(
+        "--pep8-params",
+        help="custom pep8 parameters to add to the pep8 command.")
+
     parser.add_argument(
         "--max-violations-per-file",
         default=0,
         type=int,
         help=(
-            "Maximum number of violations. Files with a highter violation "
+            "maximum number of violations. Files with a highter violation "
             "count will stop the commit. Default: 0"))
-    parser.add_argument(
-        "--pep8",
-        default="pep8",
-        help="Path to pep8 executable. Default: pep8")
+
     parser.add_argument(
         "--config",
         default="setup.cfg",
         help=(
-            "Path to pep8 config file file. Options in the config will "
+            "path to pep8 config file file. Options in the config will "
             "override the command line parameters. Default: setup.cfg"))
-    parser.add_argument(
-        "--pep8-params",
-        help="Custom pep8 parameters to add to the pep8 command")
+
     parser.add_argument(
         "--version",
         action="store_true",
-        help="Print current version number")
+        help="print current version number")
+
     args = parser.parse_args()
 
     if args.version:
@@ -62,7 +71,8 @@ def main():
         sys.exit(0)
 
     result = check_repo(
-        args.max_violations_per_file, args.pep8, args.config, args.pep8_params)
+        args.pep8_command, args.pep8_params,
+        args.config, args.max_violations_per_file)
 
     if result:
         sys.exit(0)
@@ -70,16 +80,16 @@ def main():
 
 
 def check_repo(
-        max_violations_per_file,
-        pep8="pep8",
+        pep8_command="pep8",
+        pep8_params=None,
         config="setup.cfg",
-        pep8_params=None):
+        max_violations_per_file=0):
     """ Main function doing the checks
 
     :type max_violations_per_file: int
     :param max_violations_per_file: Max violations per file to pass the commit
-    :type pep8: str
-    :param pep8: Path to pep8 executable
+    :type pep8_command: str
+    :param pep8_command: Path to pep8 executable
     :type config: str
     :param config: Path to config file
     :type pep8_params: str
@@ -105,17 +115,21 @@ def check_repo(
     if os.path.exists(config):
         conf = ConfigParser.SafeConfigParser()
         conf.read(config)
-        if conf.has_option("pep8_pre_commit_hook", "command"):
-            pep8 = conf.get("pep8_pre_commit_hook", "command")
-        if conf.has_option("pep8_pre_commit_hook", "params"):
-            pep8_params += " " + conf.get("pep8_pre_commit_hook", "params")
+        if conf.has_option("pep8_pre_commit_hook", "pep8-command"):
+            pep8_command = conf.get("pep8_pre_commit_hook", "pep8-command")
+
+        if conf.has_option("pep8_pre_commit_hook", "pep8-params"):
+            pep8_params += " " + conf.get("pep8_pre_commit_hook",
+                                          "pep8-params")
+
         if conf.has_option("pep8_pre_commit_hook", "max-violations-per-file"):
             max_violations_per_file = int(conf.get(
                 "pep8_pre_commit_hook", "max-violations-per-file"))
 
     # Set the exit code
     return check_files(
-        python_files, pep8, config, pep8_params, max_violations_per_file)
+        python_files, pep8_command, config,
+        pep8_params, max_violations_per_file)
 
 
 def check_files(
