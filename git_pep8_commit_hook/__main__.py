@@ -14,7 +14,7 @@ import sys
 from .commit_hook import main
 
 
-if __name__ == 'git_pep8_commit_hook':
+if __name__ == "git_pep8_commit_hook":
     main()
     sys.exit(0)
 

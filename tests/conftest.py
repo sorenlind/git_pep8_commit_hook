@@ -12,14 +12,14 @@ import shutil
 def temp_repo_dir(request):
     """"Create test directory and repo. Delete when test function completes."""
     # Create temporary directory
-    tmp_dir = tempfile.mkdtemp(prefix='pep8_hook_test_')
+    tmp_dir = tempfile.mkdtemp(prefix="pep8_hook_test_")
 
     # Set current working directory to the temporary directory for
     # all the commands run in the test
     os.chdir(tmp_dir)
 
     # Initialize temporary git repository
-    cmd(tmp_dir, 'git init')
+    cmd(tmp_dir, "git init")
 
     def remove_temp_repo_dir():
         """Delete directory when test function."""
@@ -38,6 +38,6 @@ def cmd(current_working_directory, args):
 
 def write_file(current_working_directory, filename, contents):
     """Write file with specified contents in specified directory."""
-    with open(os.path.join(current_working_directory, filename), 'w') as wfile:
+    with open(os.path.join(current_working_directory, filename), "w") as wfile:
         wfile.write(contents)
     return filename

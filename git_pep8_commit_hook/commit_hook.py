@@ -20,45 +20,45 @@ import ConfigParser
 import argparse
 
 ExecutionResult = collections.namedtuple(
-    'ExecutionResult',
-    'status, stdout, stderr'
+    "ExecutionResult",
+    "status, stdout, stderr"
 )
 
-VERSION = '0.1.1'
+VERSION = "0.1.1"
 
 
 def main():
     """ Main function handling configuration files etc """
     parser = argparse.ArgumentParser(
-        description='Git pep8 commit hook')
+        description="Git pep8 commit hook")
     parser.add_argument(
-        '--max-violations-per-file',
+        "--max-violations-per-file",
         default=0,
         type=int,
         help=(
-            'Maximum number of violations. Files with a highter violation '
-            'count will stop the commit. Default: 0'))
+            "Maximum number of violations. Files with a highter violation "
+            "count will stop the commit. Default: 0"))
     parser.add_argument(
-        '--pep8',
-        default='pep8',
-        help='Path to pep8 executable. Default: pep8')
+        "--pep8",
+        default="pep8",
+        help="Path to pep8 executable. Default: pep8")
     parser.add_argument(
-        '--config',
-        default='setup.cfg',
+        "--config",
+        default="setup.cfg",
         help=(
-            'Path to pep8 config file file. Options in the config will '
-            'override the command line parameters. Default: setup.cfg'))
+            "Path to pep8 config file file. Options in the config will "
+            "override the command line parameters. Default: setup.cfg"))
     parser.add_argument(
-        '--pep8-params',
-        help='Custom pep8 parameters to add to the pep8 command')
+        "--pep8-params",
+        help="Custom pep8 parameters to add to the pep8 command")
     parser.add_argument(
-        '--version',
-        action='store_true',
-        help='Print current version number')
+        "--version",
+        action="store_true",
+        help="Print current version number")
     args = parser.parse_args()
 
     if args.version:
-        print('git_pep8_commit_hook version {}'.format(VERSION))
+        print("git_pep8_commit_hook version {}".format(VERSION))
         sys.exit(0)
 
     result = check_repo(
@@ -71,8 +71,8 @@ def main():
 
 def check_repo(
         max_violations_per_file,
-        pep8='pep8',
-        config='setup.cfg',
+        pep8="pep8",
+        config="setup.cfg",
         pep8_params=None):
     """ Main function doing the checks
 
@@ -94,7 +94,7 @@ def check_repo(
             if _is_python_file(filename):
                 python_files.append((filename))
         except IOError:
-            print('File not found (probably deleted): {}\t\tSKIPPED'.format(
+            print("File not found (probably deleted): {}\t\tSKIPPED".format(
                 filename))
 
     # Don't do anything if there are no Python files
@@ -105,13 +105,13 @@ def check_repo(
     if os.path.exists(config):
         conf = ConfigParser.SafeConfigParser()
         conf.read(config)
-        if conf.has_option('pep8_pre_commit_hook', 'command'):
-            pep8 = conf.get('pep8_pre_commit_hook', 'command')
-        if conf.has_option('pep8_pre_commit_hook', 'params'):
-            pep8_params += ' ' + conf.get('pep8_pre_commit_hook', 'params')
-        if conf.has_option('pep8_pre_commit_hook', 'max-violations-per-file'):
+        if conf.has_option("pep8_pre_commit_hook", "command"):
+            pep8 = conf.get("pep8_pre_commit_hook", "command")
+        if conf.has_option("pep8_pre_commit_hook", "params"):
+            pep8_params += " " + conf.get("pep8_pre_commit_hook", "params")
+        if conf.has_option("pep8_pre_commit_hook", "max-violations-per-file"):
             max_violations_per_file = int(conf.get(
-                'pep8_pre_commit_hook', 'max-violations-per-file'))
+                "pep8_pre_commit_hook", "max-violations-per-file"))
 
     # Set the exit code
     return check_files(
@@ -135,10 +135,10 @@ def check_files(
 
             if pep8_params:
                 command += pep8_params.split()
-                if '--config' not in pep8_params:
-                    command.append('--config={}'.format(config))
+                if "--config" not in pep8_params:
+                    command.append("--config={}".format(config))
             else:
-                command.append('--config={}'.format(config))
+                command.append("--config={}".format(config))
 
             command.append(python_file)
 
@@ -154,15 +154,15 @@ def check_files(
         # Verify the violation count
         violations = _parse_violations(out)
         if violations <= int(max_violations_per_file):
-            status = 'PASSED'
+            status = "PASSED"
         else:
-            status = 'FAILED'
+            status = "FAILED"
             all_filed_passed = False
 
         # Add some output
-        print('{} violations (max {}) - {}'.format(
+        print("{} violations (max {}) - {}".format(
             violations, max_violations_per_file, status))
-        if 'FAILED' in status:
+        if "FAILED" in status:
             print(out)
 
         # Increment parsed files
@@ -185,24 +185,24 @@ def _execute(cmd):
 
 def _current_commit():
     """ Returns the current commit. """
-    if _execute('git rev-parse --verify HEAD'.split()).status:
-        return '4b825dc642cb6eb9a060e54bf8d69288fbee4904'
+    if _execute("git rev-parse --verify HEAD".split()).status:
+        return "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
     else:
-        return 'HEAD'
+        return "HEAD"
 
 
 def _get_list_of_committed_files():
     """ Returns a list of files about to be commited. """
     files = []
 
-    diff_index_cmd = 'git diff-index --cached %s' % _current_commit()
+    diff_index_cmd = "git diff-index --cached %s" % _current_commit()
     output = subprocess.check_output(
         diff_index_cmd.split()
     )
-    for result in output.split('\n'):
-        if result != '':
+    for result in output.split("\n"):
+        if result != "":
             result = result.split()
-            if result[4] in ['A', 'M']:
+            if result[4] in ["A", "M"]:
                 files.append(result[5])
 
     return files
@@ -215,12 +215,12 @@ def _is_python_file(filename):
     contains "python" and "#!", returns False otherwise.
 
     """
-    if filename.endswith('.py'):
+    if filename.endswith(".py"):
         return True
     else:
-        with open(filename, 'r') as file_handle:
+        with open(filename, "r") as file_handle:
             first_line = file_handle.readline()
-        return 'python' in first_line and '#!' in first_line
+        return "python" in first_line and "#!" in first_line
 
 
 def _parse_violations(pep8_output):
