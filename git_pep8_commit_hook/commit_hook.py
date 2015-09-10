@@ -110,13 +110,13 @@ def check_repo(
     if os.path.exists(config):
         conf = ConfigParser.SafeConfigParser()
         conf.read(config)
-        if conf.has_option('pep8-pre-commit-hook', 'command'):
-            pep8 = conf.get('pep8-pre-commit-hook', 'command')
-        if conf.has_option('pep8-pre-commit-hook', 'params'):
-            pep8_params += ' ' + conf.get('pep8-pre-commit-hook', 'params')
-        if conf.has_option('pep8-pre-commit-hook', 'max-violations-per-file'):
+        if conf.has_option('pep8_pre_commit_hook', 'command'):
+            pep8 = conf.get('pep8_pre_commit_hook', 'command')
+        if conf.has_option('pep8_pre_commit_hook', 'params'):
+            pep8_params += ' ' + conf.get('pep8_pre_commit_hook', 'params')
+        if conf.has_option('pep8_pre_commit_hook', 'max-violations-per-file'):
             max_violations_per_file = int(conf.get(
-                'pep8-pre-commit-hook', 'max-violations-per-file'))
+                'pep8_pre_commit_hook', 'max-violations-per-file'))
 
     # Set the exit code
     return check_files(
