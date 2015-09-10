@@ -19,11 +19,6 @@ import collections
 import ConfigParser
 import argparse
 
-ExecutionConfig = collections.namedtuple(
-    'ExecutionConfig',
-    'pep8, max_violations_per_file, stderr'
-)
-
 ExecutionResult = collections.namedtuple(
     'ExecutionResult',
     'status, stdout, stderr'
