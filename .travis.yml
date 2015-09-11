@@ -1,13 +1,16 @@
 language: python
 python:
-  - "2.7"
-  - "3.3"
+- '2.7'
+- '3.3'
 install:
-  - pip install pytest
-  - pip install docutils
+- pip install pytest
+- pip install docutils
 before_script:
-  - git config --global user.email "you@example.com"
-  - git config --global user.name "Your Name"
+- git config --global user.email "you@example.com"
+- git config --global user.name "Your Name"
 script:
-  - python setup.py check --restructuredtext -s
-  - python setup.py test
+- python setup.py check --restructuredtext -s
+- python setup.py test
+notifications:
+  slack:
+    secure: weHdmX32oie2pADouzhRBlIvAE6NEUG+8QsMexaiyKpU6p4YcuOshrgNRJEU7JD36H8tALuFXbrn2kA41mA+e/R8qBnBNtByRnNVU8II0HmoN6tmkfixmbTO7qo1eFj3u14YzweNbAsT/k+OC/RtC803KHYfU3mEG0jZN9UZyRExnaCzOVtdhOkzKq+PpC8WjsoHHfT0CZCmuYr5vSxwwcOzXcV6E+Yz+w5LKmLM/6Cr2SM1uVOxX542ZIYqM21Uex5P+ePwiK+TZ0UWXXahsy6agegL9yfLaq9h4URx5ho5xVEz40zm9eLBZXKVvj9Vg4kwZM0aeVUojk7OosZ1MXPaFauBvh0nJQFeY9W5Osot0I75LT5t+3e+YiZwZvRFihDyaHBDgmboXoX/yW0LuAWnCmGcZBmyaZSealy4GcpVKfHLUtHlUJh8nOJEJh6oGXET5fHIObD3N+PR+yxrPb48HAXEUlFh5zs6uMDJ2xtPyn2c6wzcf/Hl8xPA0q50CRBTfWExCFeGGPgsa2D5+RTR69j2fOmypke3AKwZTSZ5KTG+Qn0f5UoLZmYT80Q8fUcQH+/dyqVrK1jV+v1Dh4AJpA6ot5COyeUDhYIIMVREXYgU3Ma3wb6t2u8+UE0AEaOaZB7zaBFedDaz+B/XsZgyWhMy/5y7OjOdZhu1COs=
