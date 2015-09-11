@@ -2,7 +2,9 @@ language: python
 python:
   - "2.7"
   - "3.3"
-install: pip install pytest
+install:
+  - pip install pytest
+  - pip install docutils
 before_script:
   - git config --global user.email "you@example.com"
   - git config --global user.name "Your Name"
