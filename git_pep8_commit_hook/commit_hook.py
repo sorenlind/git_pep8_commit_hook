@@ -28,7 +28,7 @@ ExecutionResult = collections.namedtuple(
     "status, stdout, stderr"
 )
 
-VERSION = "0.1.0rc2"
+VERSION = "0.1.0rc3"
 
 
 def main():
