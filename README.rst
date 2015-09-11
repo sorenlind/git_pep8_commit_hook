@@ -78,14 +78,35 @@ arguments to the script:
 -  **help** displays a help message explaining the arguments.
 
 Running tests
--------------
+=============
 
 The tests are written using ``pytest``. You can run the tests without
 installing pytest and without installing the script by typing
 ``python runtests.py``. Alternatively, you can install pytest by running
-\`pip install pyte
+``pip install pytest``. The script itself can be installed in
+development mode by running ``pip install -e .`` from the root directory
+of the repository. Then the tests can be run by executing ``py.test``.
+
+Requirements
+============
+
+This commit hook is written in Python and has the following
+requirements:
+
+-  `pep8`_ (``sudo pip install pep8``)
+-  Python >= 2.7
+
+Release notes
+=============
+
+0.1 (2015-??-??)
+----------------
+
+-  Initial release.
 
 .. _git-pylint-commit-hook: https://github.com/sebdah/git-pylint-commit-hook
 
 .. |Build Status| image:: https://travis-ci.org/sorenlind/git_pep8_commit_hook.svg?branch=master
    :target: https://travis-ci.org/sorenlind/git_pep8_commit_hook
+
+.. _pep8: https://github.com/pycqa/pep8
