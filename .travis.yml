@@ -6,4 +6,6 @@ install: pip install pytest
 before_script:
   - git config --global user.email "you@example.com"
   - git config --global user.name "Your Name"
-script: python setup.py test
+script:
+  - python setup.py check --restructuredtext -s
+  - python setup.py test

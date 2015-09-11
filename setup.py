@@ -26,11 +26,15 @@ VERSION = re.search(
     re.M
     ).group(1)
 
+with open("README.rst", "rb") as f:
+    LONG_DESCRIPTION = f.read().decode("utf-8")
+
 setup(
     name="git_pep8_commit_hook",
     version=VERSION,
     license="Apache License, Version 2.0",
     description="Git commit hook that checks Python files with pep8.",
+    long_description=LONG_DESCRIPTION,
     author="Soren Lind Kristiansen",
     author_email="soren@gutsandglory.dk",
     url="https://github.com/sorenlind/git_pep8_commit_hook",
